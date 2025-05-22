@@ -1,0 +1,22 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}{% endblock title %}</title>
+
+    {% comment %} bootsrap {% endcomment %}
+    <link rel="stylesheet" href="{% static 'bootstrap\css\bootstrap.min.css' %}"> 
+    {% comment %} css {% endcomment %}
+    <link rel="stylesheet" href="{% static 'css\base.css' %}}">
+</head>
+<body>
+    <header class="headers sticky-top"></header>
+
+
+    
+    {% comment %} js for bootstrap {% endcomment %}
+    <script src="{% static 'bootstrap\js\bootstrap.bundle.min.js' %}"></script>
+</body>
+</html>    
