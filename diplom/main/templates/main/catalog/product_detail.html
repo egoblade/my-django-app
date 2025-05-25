@@ -1,0 +1,42 @@
+{% extends 'main/base.html' %}
+{% block title %}{{ product.name }}{% endblock %}
+{% block content %}
+<div class="container">
+  <h1>{{ product.name }}</h1>
+  <p>{{ product.description }}</p>
+  <p>Цена: {{ product.price }}</p>
+  <a href="{% url 'main:add_to_cart' product.id %}" class="btn btn-primary">В корзину</a>
+  <hr>
+  <h3>Отзывы</h3>
+  {% for review in product.reviews.all %}
+    <div class="mb-3">
+      <strong>{{ review.user.username }}</strong> - {{ review.rating }}/5
+      <p>{{ review.comment }}</p>
+    </div>
+  {% empty %}
+    <p>Нет отзывов</p>
+  {% endfor %}
+  {% if user.is_authenticated %}
+    <h4>Оставить отзыв</h4>
+    <form method="post" action="{% url 'main:add_review' product.id %}">
+      {% csrf_token %}
+      <div class="mb-3">
+        <label for="rating">Оценка</label>
+        <select name="rating" id="rating" class="form-select" required>
+          <option value="">– выберите –</option>
+          {% for i in rating_range %}
+            <option value="{{ i }}">{{ i }}</option>
+          {% endfor %}
+        </select>
+      </div>
+      <div class="mb-3">
+        <label for="comment">Комментарий</label>
+        <textarea name="comment" id="comment" class="form-control" rows="3" required></textarea>
+      </div>
+      <button class="btn btn-primary">Отправить отзыв</button>
+    </form>
+  {% else %}
+    <p><a href="{% url 'main:login' %}">Войдите</a> чтобы оставить отзыв</p>
+  {% endif %}
+</div>
+{% endblock %}

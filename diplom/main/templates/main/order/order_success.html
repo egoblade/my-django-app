@@ -1,0 +1,15 @@
+{% extends 'main/base.html' %}
+{% block title %}Заказ принят{% endblock %}
+
+{% block content %}
+<div class="text-center">
+  <h2>Спасибо, Ваш заказ №{{ order.id }} принят!</h2>
+  <p>Мы свяжемся с Вами в ближайшее время.</p>
+  <a href="{% url 'main:index' %}" class="btn btn-primary mt-3">
+    На главную
+  </a>
+  <a href="{% url 'main:category_list' %}" class="btn btn-secondary mt-3">
+    Вернуться в каталог
+  </a>
+</div>
+{% endblock %}

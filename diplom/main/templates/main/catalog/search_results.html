@@ -1,0 +1,22 @@
+{% extends 'main/base.html' %}
+{% block title %}Результаты поиска{% endblock %}
+{% block content %}
+<h2>Результаты поиска по запросу "{{ query }}"</h2>
+{% if results %}
+  <div class="row">
+    {% for product in results %}
+      <div class="col-md-4 mb-3">
+        <div class="card h-100">
+          <div class="card-body">
+            <h5 class="card-title">{{ product.name }}</h5>
+            <p class="card-text">Цена: {{ product.price }} ₽</p>
+            <a href="{% url 'main:product_detail' product.id %}" class="btn btn-primary">Подробнее</a>
+          </div>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+{% else %}
+  <p>Ничего не найдено.</p>
+{% endif %}
+{% endblock %}

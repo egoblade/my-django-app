@@ -1,0 +1,23 @@
+{% extends 'main/base.html' %}
+{% block title %}Оформление заказа{% endblock %}
+{% block content %}
+<div class="container">
+  <h2>Оформление заказа</h2>
+  <form method="post">
+    {% csrf_token %}
+    <ul class="list-group mb-3">
+      {% for item in items %}
+        <li class="list-group-item d-flex justify-content-between align-items-center">
+          {{ item.product.name }} x {{ item.quantity }}
+          <span>{{ item.cost }}</span>
+        </li>
+      {% endfor %}
+      <li class="list-group-item d-flex justify-content-between">
+        <strong>Итого</strong>
+        <strong>{{ total }}</strong>
+      </li>
+    </ul>
+    <button class="btn btn-success">Подтвердить</button>
+  </form>
+</div>
+{% endblock %}

@@ -1,22 +1,50 @@
 {% load static %}
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block title %}{% endblock title %}</title>
-
-    {% comment %} bootsrap {% endcomment %}
-    <link rel="stylesheet" href="{% static 'bootstrap\css\bootstrap.min.css' %}"> 
-    {% comment %} css {% endcomment %}
-    <link rel="stylesheet" href="{% static 'css\base.css' %}}">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}Avrora Shop{% endblock %}</title>
+  <link href="{% static 'bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
 </head>
 <body>
-    <header class="headers sticky-top"></header>
-
-
-    
-    {% comment %} js for bootstrap {% endcomment %}
-    <script src="{% static 'bootstrap\js\bootstrap.bundle.min.js' %}"></script>
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="{% url 'main:index' %}">Avrora Shop</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#nav">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="nav">
+      <ul class="navbar-nav me-auto">  
+        <li class="nav-item"><a class="nav-link" href="{% url 'main:category_list' %}">Каталог</a></li>
+        <li class="nav-item"><a class="nav-link" href="{% url 'main:search' %}">Поиск</a></li>
+        {% if user.is_authenticated and user.is_staff %}
+          <li class="nav-item"><a class="nav-link" href="{% url 'main:stats' %}">Статистика</a></li>
+        {% endif %}
+        <li class="nav-item"><a class="nav-link" href="{% url 'main:order_list' %}">Мои заказы</a></li>
+        <li class="nav-item"><a class="nav-link" href="{% url 'main:cart_detail' %}">Корзина</a></li>
+      </ul>
+      <form class="d-flex me-3" method="get" action="{% url 'main:search' %}">
+        <input class="form-control me-2" type="search" name="q" placeholder="Поиск...">
+        <button class="btn btn-outline-success" type="submit">Найти</button>
+      </form>
+      <ul class="navbar-nav">
+        {% if user.is_authenticated %}
+          <li class="nav-item"><span class="nav-link disabled">{{ user.username }}</span></li>
+          <li class="nav-item">
+            <form method="post" action="{% url 'main:logout' %}">{% csrf_token %}
+              <button class="nav-link btn btn-link p-0">Выйти</button>
+            </form>
+          </li>
+        {% else %}
+          <li class="nav-item"><a class="nav-link" href="{% url 'main:login' %}">Вход</a></li>
+          <li class="nav-item"><a class="nav-link" href="{% url 'main:register' %}">Регистрация</a></li>
+        {% endif %}
+      </ul>
+    </div>
+  </div>
+</nav>
+<div class="container mt-4">{% block content %}{% endblock %}</div>
+<script src="{% static 'bootstrap/js/bootstrap.bundle.min.js' %}"></script>
 </body>
-</html>    
+</html>

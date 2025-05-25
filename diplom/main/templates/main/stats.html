@@ -1,0 +1,43 @@
+{% extends 'main/base.html' %}
+{% block title %}Статистика продаж{% endblock %}
+
+{% block content %}
+<h2>Статистика продаж</h2>
+
+<div class="row mb-4">
+  <div class="col-md-6">
+    <div class="card text-white bg-success mb-3">
+      <div class="card-header">Товарооборот</div>
+      <div class="card-body">
+        <h3>{{ turnover }} ₽</h3>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-6">
+    <div class="card text-white bg-info mb-3">
+      <div class="card-header">Средний чек</div>
+      <div class="card-body">
+        <h3>{{ avg_check|floatformat:2 }} ₽</h3>
+      </div>
+    </div>
+  </div>
+</div>
+
+<h3>Топ-5 популярных товаров</h3>
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>Товар</th>
+      <th>Продано (шт.)</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for item in popular %}
+    <tr>
+      <td>{{ item.product__name }}</td>
+      <td>{{ item.sold }}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endblock %}
